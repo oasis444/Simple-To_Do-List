@@ -105,11 +105,21 @@ extension TableVC: UITableViewDataSource {
     
     // 편집 모드에서 삭제 버튼을 눌렀을 때 어떤 셀인지 알려주는 메서드
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        // case 1
         tasks.remove(at: indexPath.item)
         tableView.deleteRows(at: [indexPath], with: .automatic)
         if tasks.isEmpty {
             doneAction()
         }
+        
+        // case 2
+//        if editingStyle == .delete {
+//            tasks.remove(at: indexPath.item)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//            if tasks.isEmpty {
+//                doneAction()
+//            }
+//        }
     }
     
     // 행이 다른 위치로 이동하면 이동 전, 후 위치를 알려주는 메서드

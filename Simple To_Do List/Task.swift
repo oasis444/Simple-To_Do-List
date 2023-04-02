@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Task {
+struct Task: Hashable {
     var title: String
     var done: Bool
 }
