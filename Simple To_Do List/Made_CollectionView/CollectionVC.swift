@@ -34,31 +34,7 @@ class CollectionVC: UIViewController {
         configBarButtonItems()
         loadTasks()
         configure()
-        
-        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_:)))
-        collectionView.addGestureRecognizer(gesture)
     }
-    
-    @objc func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
-        switch gesture.state {
-        case .began:
-            guard let targetIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
-                print("here")
-                return
-            }
-            print("targetIndex: \(targetIndexPath)")
-            collectionView.beginInteractiveMovementForItem(at: targetIndexPath)
-        case .changed:
-            print("changed: \(gesture.location(in: collectionView))")
-            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: collectionView))
-        case .ended:
-            print("end")
-            collectionView.endInteractiveMovement()
-        default:
-            collectionView.cancelInteractiveMovement()
-        }
-    }
-    
     
     private func configBarButtonItems() {
         editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editAction))
@@ -73,7 +49,6 @@ class CollectionVC: UIViewController {
             cell.configure(info: itemIdentifier)
             return cell
         })
-        
         collectionView.collectionViewLayout = layout()
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
@@ -154,27 +129,6 @@ extension CollectionVC {
             completion(false)
         }
         return UISwipeActionsConfiguration(actions: [deleteAction])
-    }
-}
-
-extension CollectionVC: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let task = tasks[sourceIndexPath.item]
-        tasks.remove(at: sourceIndexPath.item)
-        tasks.insert(task, at: destinationIndexPath.item)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tasks.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
     }
 }
 
