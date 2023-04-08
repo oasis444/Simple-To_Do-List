@@ -122,13 +122,16 @@ extension CollectionVC {
     
     private func makeSwipeActions(for indexPath: IndexPath?) -> UISwipeActionsConfiguration? {
         guard let indexPath = indexPath else { return nil }
-        let deleteActionTitle = NSLocalizedString("Delete", comment: "Delete action title")
-        let deleteAction = UIContextualAction(style: .destructive, title: deleteActionTitle) { [weak self] _, _, completion in
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] _, _, completion in
             self?.tasks.remove(at: indexPath.item)
             self?.applyItems()
-            completion(false)
+            completion(true)
         }
-        return UISwipeActionsConfiguration(actions: [deleteAction])
+        let anyAction = UIContextualAction(style: .normal, title: "Any") { [weak self] _, _, completion in
+            // put handler here
+            completion(true)
+        }
+        return UISwipeActionsConfiguration(actions: [deleteAction, anyAction])
     }
 }
 

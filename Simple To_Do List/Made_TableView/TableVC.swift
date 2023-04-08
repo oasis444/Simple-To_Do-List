@@ -103,7 +103,27 @@ extension TableVC: UITableViewDataSource {
         return cell
     }
     
-    // 편집 모드에서 삭제 버튼을 눌렀을 때 어떤 셀인지 알려주는 메서드
+    // 이런 메서드도 있다.(Swipe Action)
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let actions = UIContextualAction(style: .normal, title: "Any", handler: { action, view, completion in
+            // put handler here
+            completion(true)
+        })
+        actions.image = UIImage(systemName: "pencil")
+        return UISwipeActionsConfiguration(actions: [actions])
+    }
+    
+    // Swipe Action
+//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        let actions = UIContextualAction(style: .destructive, title: "delete", handler: { action, view, completion in
+//            self.tasks.remove(at: indexPath.item)
+//            tableView.deleteRows(at: [indexPath], with: .automatic)
+//            completion(true)
+//        })
+//        return UISwipeActionsConfiguration(actions: [actions])
+//    }
+    
+    // 편집 모드에서 삭제 버튼을 눌렀을 때 어떤 셀인지 알려주는 메서드(editing mode)
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         // case 1
         tasks.remove(at: indexPath.item)
