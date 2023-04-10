@@ -86,6 +86,10 @@ class moveItemsVC: UIViewController {
 
 extension moveItemsVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        // ※ frame, bound 차이점
+        // frame: Super View 좌표계에서 View의 위치와 크기를 나타낸다
+        // bound: 자신의 좌표계에서 View의 위치와 크기를 나타낸다
+        // 참고: https://babbab2.tistory.com/44
         return CGSize(width: view.frame.size.width/3.2, height: view.frame.size.width/3.2)
     }
 }
